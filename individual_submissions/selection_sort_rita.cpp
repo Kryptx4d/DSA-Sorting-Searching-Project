@@ -36,7 +36,7 @@ void selectionSort(int data[], int size)
     int max_index;
     int rightmost, current;
 
-    for (rightmost = size - 1; rightmost > 0; rightmost--)
+    for (rightmost = size - 1; rightmost > 0; rightmost--) \\Select counter at each of its step.
     {
         max_index = 0;
 
