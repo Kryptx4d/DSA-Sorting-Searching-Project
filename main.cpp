@@ -166,17 +166,11 @@ int main()
 
     do
     {
-        std::cout << "\n" << std::endl;
-        std::cout << "# Sorting and Searching Interface DSA #\n";
-        std::cout << "A. Display all records: \n";
-        std::cout << "B. Sort Records: \n";
-        std::cout << "C. Search for numbers: \n";
-        std::cout << "D. Exit App\n" << std::endl;
-        std::cout <<"Case sensitive! Enter letters in Capital letters\n" << std::endl;
-
-        std::cout << "Enter your choice(A-D): ";
+        std::cout << "\nA. Display Records\n";
+        std::cout << "B. Sort Records\n";
+        std::cout << "C. Search for Number\n";
+        std::cout << "D. Exit\nEnter choice: ";
         std::cin >> choice;
-        std::cout <<"\n" << std::endl;
 
         if (choice == 'A')
         {
@@ -190,7 +184,7 @@ int main()
 
             std::cout << "1. Selection Sort\n";
             std::cout << "2. Quick Sort\n";
-            std::cout << "3. Merge Sort\n\nEnter your choice: " << std::endl;
+            std::cout << "3. Merge Sort\nEnter choice: ";
             std::cin >> sortChoice;
 
             std::clock_t start = std::clock();
@@ -216,7 +210,8 @@ int main()
                 continue;
             }
 
-            double time = (double)(std::clock() - start)* 1000 / CLOCKS_PER_SEC;
+            double time = (double)(std::clock() - start)
+                          * 1000 / CLOCKS_PER_SEC;
 
             std::cout << "Sorted Records: ";
             displayRecords(data, size);
@@ -229,9 +224,9 @@ int main()
             quickSort(data, size);
 
             std::cout << "1. Binary Search\n";
-            std::cout << "2. Interpolation Search\n\nEnter choice: "<< std::endl;
+            std::cout << "2. Interpolation Search\nEnter choice: ";
             std::cin >> searchChoice;
-            std::cout << "\nEnter target: ";
+            std::cout << "Enter target: ";
             std::cin >> target;
 
             std::clock_t start = std::clock();
@@ -269,4 +264,3 @@ int main()
 
     return 0;
 }
-
