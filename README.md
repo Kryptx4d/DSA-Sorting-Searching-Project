@@ -23,7 +23,7 @@ This project is a C++ console application that implements and analyzes sorting a
 
 | Member | Responsibility |
 |---|---|
-| Group Leader | Quick Sort, integration, GitHub, final checking |
+| Muhammad Umair | Quick Sort, integration, GitHub, final checking |
 | Rita Magar | Selection Sort |
 | Jagat Bhul | Merge Sort and runtime comparison table |
 | Rojina Adhikari | Binary Search and report formatting |
