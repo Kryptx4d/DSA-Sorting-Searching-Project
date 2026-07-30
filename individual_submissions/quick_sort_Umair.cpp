@@ -1,82 +1,108 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <chrono>
 
-using namespace std;
-using namespace std::chrono;
+const int MAX_SIZE = 50000;
+int data[MAX_SIZE];
+int stackData[MAX_SIZE * 2];
 
-void generateRandomData(int data[], int size) {
-    for (int i = 0; i < size; i++) {
-        data[i] = rand() % 100000;   
-    }
+void generateRecords(int data[], int size)
+{
+    for (int i = 0; i < size; i++)
+        data[i] = std::rand() % 1000;
 }
 
+void displayRecords(const int data[], int size)
+{
+    int limit = size;
 
-void displayData(int data[], int size) {
-    for (int i = 0; i < size; i++) {
-        cout << data[i] << " ";
-    }
-    cout << endl;
+    if (limit > 20)
+        limit = 20;
+
+    for (int i = 0; i < limit; i++)
+        std::cout << data[i] << " ";
+
+    if (size > 20)
+        std::cout << "...";
+
+    std::cout << "\n";
 }
 
+void quickSort(int data[], int size)
+{
+    int top = -1;
 
-int partitionArray(int data[], int low, int high) {
-    int pivot = data[high];  
-    int i = low - 1;
-    int temp;
+    stackData[++top] = 0;
+    stackData[++top] = size - 1;
 
-    for (int j = low; j < high; j++) {
-        if (data[j] <= pivot) {
-            i++;
-          
-            temp = data[i];
-            data[i] = data[j];
-            data[j] = temp;
+    while (top >= 0)
+    {
+        int high = stackData[top--];
+        int low = stackData[top--];
+        int pivot = data[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+        {
+            if (data[j] <= pivot)
+            {
+                i++;
+
+                int temp = data[i];
+                data[i] = data[j];
+                data[j] = temp;
+            }
+        }
+
+        int temp = data[i + 1];
+        data[i + 1] = data[high];
+        data[high] = temp;
+
+        int pivotIndex = i + 1;
+
+        if (pivotIndex - 1 > low)
+        {
+            stackData[++top] = low;
+            stackData[++top] = pivotIndex - 1;
+        }
+
+        if (pivotIndex + 1 < high)
+        {
+            stackData[++top] = pivotIndex + 1;
+            stackData[++top] = high;
         }
     }
-
-    temp = data[i + 1];
-    data[i + 1] = data[high];
-    data[high] = temp;
-
-    return i + 1;
 }
 
+int main()
+{
+    int size;
+    std::clock_t start;
+    double time;
 
-void quickSort(int data[], int low, int high) {
-    if (low < high) {
-        int pivotIndex = partitionArray(data, low, high);
+    std::srand(std::time(NULL));
 
-        quickSort(data, low, pivotIndex - 1);
-        quickSort(data, pivotIndex + 1, high);
-    }
-}
+    std::cout << "Enter number of records (100-50000): ";
+    std::cin >> size;
 
-int main() {
-    srand(time(0));
+    if (size < 100 || size > MAX_SIZE)
+        size = 100;
 
-    const int SIZE = 1000;
-    int data[SIZE];
+    generateRecords(data, size);
 
-    generateRandomData(data, SIZE);
+    std::cout << "\nBefore Sorting: ";
+    displayRecords(data, size);
 
-    cout << "Original Data:\n";
-    displayData(data, SIZE);
+    start = std::clock();
+    quickSort(data, size);
+    time = (double)(std::clock() - start)
+           * 1000 / CLOCKS_PER_SEC;
 
-    auto start = high_resolution_clock::now();
+    std::cout << "After Sorting: ";
+    displayRecords(data, size);
 
-    quickSort(data, 0, SIZE - 1);
-
-    auto stop = high_resolution_clock::now();
-
-    auto duration = duration_cast<microseconds>(stop - start);
-
-    cout << "\nSorted Data using Quick Sort:\n";
-    displayData(data, SIZE);
-
-    cout << "\nQuick Sort Execution Time: "
-         << duration.count() << " microseconds" << endl;
+    std::cout << "Quick Sort Execution Time: "
+              << time << " ms\n";
 
     return 0;
 }
